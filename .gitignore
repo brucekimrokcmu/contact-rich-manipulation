@@ -1,0 +1,32 @@
+# Ignore build, install, and log directories
+robot_ws/src/planning/external/build/
+robot_ws/src/planning/external/install/
+robot_ws/src/planning/external/log/
+
+# Ignore temporary files and IDE configurations
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Ignore Python bytecode files
+*.pyc
+*.pyo
+__pycache__/
+
+# Ignore CMake files
+CMakeCache.txt
+CMakeFiles/
+Makefile
+Makefile.user
+*.cmake
+
+# Ignore ROS 2 dependencies folder
+ros2_ws/devel/
+
+# Ignore environment files
+*.env
+
+# Ignore other common unnecessary files
+.DS_Store
+Thumbs.db
