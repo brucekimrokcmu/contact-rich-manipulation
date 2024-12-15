@@ -1,4 +1,7 @@
 # Ignore build, install, and log directories
+build/
+install/
+log/
 robot_ws/src/planning/external/build/
 robot_ws/src/planning/external/install/
 robot_ws/src/planning/external/log/

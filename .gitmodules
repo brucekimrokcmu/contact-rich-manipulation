@@ -1,33 +1,33 @@
-[submodule "robot_ws/src/planning/external/moveit2"]
-    path = robot_ws/src/planning/external/moveit2
-    url = ~/Projects/Fastening/robot_ws/src/planning/external/moveit2
-[submodule "robot_ws/src/planning/external/moveit_resources"]
-    path = robot_ws/src/planning/external/moveit_resources
-    url = ~/Projects/Fastening/robot_ws/src/planning/external/moveit_resources
-[submodule "robot_ws/src/planning/external/pick_ik"]
-    path = robot_ws/src/planning/external/pick_ik
-    url = ~/Projects/Fastening/robot_ws/src/planning/external/pick_ik
-[submodule "robot_ws/src/planning/external/rviz_visual_tools"]
-    path = robot_ws/src/planning/external/rviz_visual_tools
-    url = ~/Projects/Fastening/robot_ws/src/planning/external/rviz_visual_tools
-[submodule "robot_ws/src/planning/external/moveit2_tutorials"]
-    path = robot_ws/src/planning/external/moveit2_tutorials
-    url = ~/Projects/Fastening/robot_ws/src/planning/external/moveit2_tutorials
-[submodule "robot_ws/src/planning/external/moveit_task_constructor"]
-    path = robot_ws/src/planning/external/moveit_task_constructor
-    url = ~/Projects/Fastening/robot_ws/src/planning/external/moveit_task_constructor
-[submodule "robot_ws/src/planning/external/ros2_kortex"]
-    path = robot_ws/src/planning/external/ros2_kortex
-    url = ~/Projects/Fastening/robot_ws/src/planning/external/ros2_kortex
-[submodule "robot_ws/src/planning/external/serial"]
-    path = robot_ws/src/planning/external/serial
-    url = ~/Projects/Fastening/robot_ws/src/planning/external/serial
-[submodule "robot_ws/src/planning/external/moveit_msgs"]
-    path = robot_ws/src/planning/external/moveit_msgs
-    url = ~/Projects/Fastening/robot_ws/src/planning/external/moveit_msgs
-[submodule "robot_ws/src/planning/external/moveit_visual_tools"]
-    path = robot_ws/src/planning/external/moveit_visual_tools
-    url = ~/Projects/Fastening/robot_ws/src/planning/external/moveit_visual_tools
-[submodule "robot_ws/src/planning/external/ros2_robotiq_gripper"]
-    path = robot_ws/src/planning/external/ros2_robotiq_gripper
-    url = ~/Projects/Fastening/robot_ws/src/planning/external/ros2_robotiq_gripper
+[submodule "robot_ws/src/external/moveit2"]
+    path = robot_ws/src/external/moveit2
+    url = ./robot_ws/src/external/moveit2
+[submodule "robot_ws/src/external/moveit_resources"]
+    path = robot_ws/src/external/moveit_resources
+    url = ./robot_ws/src/external/moveit_resources
+[submodule "robot_ws/src/external/pick_ik"]
+    path = robot_ws/src/external/pick_ik
+    url = ./robot_ws/src/external/pick_ik
+[submodule "robot_ws/src/external/rviz_visual_tools"]
+    path = robot_ws/src/external/rviz_visual_tools
+    url = ./robot_ws/src/external/rviz_visual_tools
+[submodule "robot_ws/src/external/moveit2_tutorials"]
+    path = robot_ws/src/external/moveit2_tutorials
+    url = ./robot_ws/src/external/moveit2_tutorials
+[submodule "robot_ws/src/external/moveit_task_constructor"]
+    path = robot_ws/src/external/moveit_task_constructor
+    url = ./robot_ws/src/external/moveit_task_constructor
+[submodule "robot_ws/src/external/ros2_kortex"]
+    path = robot_ws/src/external/ros2_kortex
+    url = ./robot_ws/src/external/ros2_kortex
+[submodule "robot_ws/src/external/serial"]
+    path = robot_ws/src/external/serial
+    url = ./robot_ws/src/external/serial
+[submodule "robot_ws/src/external/moveit_msgs"]
+    path = robot_ws/src/external/moveit_msgs
+    url = ./robot_ws/src/external/moveit_msgs
+[submodule "robot_ws/src/external/moveit_visual_tools"]
+    path = robot_ws/src/external/moveit_visual_tools
+    url = ./robot_ws/src/external/moveit_visual_tools
+[submodule "robot_ws/src/external/ros2_robotiq_gripper"]
+    path = robot_ws/src/external/ros2_robotiq_gripper
+    url = ./robot_ws/src/external/ros2_robotiq_gripper
