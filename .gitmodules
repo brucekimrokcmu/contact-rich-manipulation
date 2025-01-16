@@ -31,3 +31,6 @@
 [submodule "robot_ws/src/external/ros2_robotiq_gripper"]
     path = robot_ws/src/external/ros2_robotiq_gripper
     url = ./robot_ws/src/external/ros2_robotiq_gripper
+[submodule "robot_descriptions"]
+	path = robot_descriptions
+	url = git@github.com:google-deepmind/mujoco_menagerie.git
