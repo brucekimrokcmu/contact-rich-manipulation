@@ -39,6 +39,7 @@ MuJoCo ROS2 bridge for real-time physics simulation.
 Synchronizes with ROS2 topics for visualization.
 
 3. Motion Planning Workflow
+```
 (base) brucekimrok@brucekimrok-gram:~/projects/Fastening/robot_ws$ tree -L 3
 .
 ├── build
@@ -66,3 +67,4 @@ Synchronizes with ROS2 topics for visualization.
             ├── robot_motion_planner.cpp  # Planning logic (implementation)
         ├── config
             ├── planning.yaml         # Planner settings (OMPL, constraints)
+```
