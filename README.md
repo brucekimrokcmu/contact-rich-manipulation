@@ -28,9 +28,6 @@ Global Planning: OMPL-based path planning.
 (TBD) Local Planning: Custom controllers for reactive adjustments.
 (TBD) Constraint Handling: Ensures collision-free and feasible paths
 
-- Trajectory Optimization: 
-(TBD) Generates smooth joint-space trajectories. 
-
 - Controller 
 Executes the motion by publishing joint commands
 
@@ -38,33 +35,51 @@ Executes the motion by publishing joint commands
 MuJoCo ROS2 bridge for real-time physics simulation.
 Synchronizes with ROS2 topics for visualization.
 
-3. Motion Planning Workflow
+## Motion Planning Workflow
 ```
-(base) brucekimrok@brucekimrok-gram:~/projects/Fastening/robot_ws$ tree -L 3
+brucekimrok@brucekimrok-gram:~/projects/Fastening/robot_ws/src$ tree -L 3
 .
-├── build
-├── install
-├── log
-└── src
-    ├── control
-    │   ├── CMakeLists.txt
-    │   ├── package.xml
-    │   ├── motion_executor_node.cpp  # Executes planned trajectories
-    ├── msgs
-    │   ├── CMakeLists.txt
-    │   ├── package.xml
-    │   ├── msg
-    │   │   ├── Trajectory.msg        # A sequence of waypoints for execution
-    │   ├── srv
-    │       ├── PlannerRequest.srv    # Service request for motion planning
-    └── planning
-        ├── CMakeLists.txt
-        ├── package.xml
-        ├── include/planning
-        │   ├── robot_motion_panner.hpp # Planning logic (header)
-        ├── src
-            ├── motion_planner_node.cpp   # Global planner using OMPL
-            ├── robot_motion_planner.cpp  # Planning logic (implementation)
-        ├── config
-            ├── planning.yaml         # Planner settings (OMPL, constraints)
+├── control
+│   ├── CMakeLists.txt
+│   └── package.xml
+├── localization
+│   ├── CMakeLists.txt
+│   └── package.xml
+├── mapping
+│   ├── CMakeLists.txt
+│   └── package.xml
+├── msgs
+│   ├── CMakeLists.txt
+│   ├── msg
+│   ├── package.xml
+│   └── srv
+│       └── PlanMotion.srv
+└── planning
+    ├── CMakeLists.txt
+    ├── include
+    │   └── planning
+    ├── LICENSE
+    ├── package.xml
+    └── src
+        ├── motion_client.cpp
+        ├── motion_server.cpp
+        └── simple_motion_planner.cpp
+
+```
+
+## Build & Run
+Build
+```
+cd robot_ws 
+colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
+```
+Open a terminal
+```
+source install/setup.bash
+ros2 run planning motion_server
+```
+Open another terminal
+```
+source install/setup.bash
+ros2 run planning motion_client
 ```
