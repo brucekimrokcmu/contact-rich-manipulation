@@ -1,4 +1,4 @@
-# Fastening Project
+# Contact Rich Manipulation Project
 
 # Installation
 ## Prerequisites
