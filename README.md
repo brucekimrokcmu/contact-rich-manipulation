@@ -1,20 +1,35 @@
 # Fastening Project
 
-## Installation
+# Installation
+## Prerequisites
+- Ubuntu 20.04 or 22.04 (recommended)
+- ROS2 (Foxy, Galactic, Humble, or Rolling)
+- C++17 compiler
+- Python 3.8+ with pip
 
-To install the required dependencies, run the following command:
+## System Dependencies
+Install ROS2 and its dependencies by following the official ROS2 installation guide:
 
+https://docs.ros.org/en/rolling/Installation.html
+
+Make sure rosdep is initialized and updated:
+
+```bash
+sudo rosdep init
+rosdep update
+```
+Install OMPL ROS2 package and other dependencies:
+```bash
+sudo apt install ros-<your_ros2_distro>-ompl ros-<your_ros2_distro>-rclcpp ros-<your_ros2_distro>-tf2-ros
+```
+Replace <your_ros2_distro> with your ROS2 distribution name (e.g., humble).
+
+
+## Python Dependencies
+Install Python packages required for simulation and visualization:
 ```bash
 pip install -r requirements.txt
 ```
-
-## Requirements
-
-The `requirements.txt` file includes the following dependencies:
-- **MuJoCo Simulation**: A physics engine for simulating robots.
-- **Viewer Module**: For visualizing the simulation.
-- **Robot Descriptions**: Definitions and models of the robots used in the simulation.
-- **Inverse Kinematics**: Algorithms based on the MuJoCo physics engine to control robot movements.
 
 ## System Design
 
@@ -35,51 +50,25 @@ Executes the motion by publishing joint commands
 MuJoCo ROS2 bridge for real-time physics simulation.
 Synchronizes with ROS2 topics for visualization.
 
-## Motion Planning Workflow
-```
-brucekimrok@brucekimrok-gram:~/projects/Fastening/robot_ws/src$ tree -L 3
-.
-├── control
-│   ├── CMakeLists.txt
-│   └── package.xml
-├── localization
-│   ├── CMakeLists.txt
-│   └── package.xml
-├── mapping
-│   ├── CMakeLists.txt
-│   └── package.xml
-├── msgs
-│   ├── CMakeLists.txt
-│   ├── msg
-│   ├── package.xml
-│   └── srv
-│       └── PlanMotion.srv
-└── planning
-    ├── CMakeLists.txt
-    ├── include
-    │   └── planning
-    ├── LICENSE
-    ├── package.xml
-    └── src
-        ├── motion_client.cpp
-        ├── motion_server.cpp
-        └── simple_motion_planner.cpp
+# Build & Run Instructions
+## Build
+From the root of your ROS2 workspace:
 
-```
-
-## Build & Run
-Build
-```
-cd robot_ws 
+```bash
+cd robot_ws
+rosdep install --from-paths src --ignore-src -r -y
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
 ```
-Open a terminal
-```
+## Source your workspace
+```bash
 source install/setup.bash
+```
+## Run Motion Planning Nodes
+Open one terminal:
+```bash
 ros2 run planning motion_server
 ```
-Open another terminal
-```
-source install/setup.bash
+Open another terminal:
+```bash
 ros2 run planning motion_client
 ```

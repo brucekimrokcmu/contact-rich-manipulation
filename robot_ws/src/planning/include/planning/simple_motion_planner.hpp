@@ -4,6 +4,7 @@
 #include <ompl/base/spaces/SE3StateSpace.h>
 #include <ompl/base/spaces/RealVectorBounds.h>
 #include <ompl/geometric/planners/rrt/RRTstar.h>
+#include "rclcpp/rclcpp.hpp"
 
 class SimpleMotionPlanner
 {

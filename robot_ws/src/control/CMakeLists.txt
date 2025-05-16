@@ -7,9 +7,28 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(Eigen3 REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
+
+include_directories(
+  include
+  ${EIGEN3_INCLUDE_DIRS}
+)
+
+# add_executable(control_node src/control_node.cpp)  
+
+# target_include_directories(control_node PRIVATE include)
+# target_link_libraries(control_node Eigen3::Eigen)
+# ament_target_dependencies(control_node rclcpp std_msgs geometry_msgs)
+
+# install(TARGETS control_node
+#   DESTINATION lib/${PROJECT_NAME})
+
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
