@@ -3,12 +3,10 @@
 
 namespace control::state
 {
-    class BicycleState : public State
+    class BicycleState2D : public State
     {
     public:
-        BicycleState() = default;
-
-        BicycleState(double x, double y, double theta, double delta, double v)
+        BicycleState2D(double x, double y, double theta, double delta, double v)
             : x_(x),
               y_(y),
               theta_(theta),

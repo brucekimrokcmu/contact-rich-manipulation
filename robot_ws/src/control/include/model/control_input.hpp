@@ -4,10 +4,10 @@
 
 namespace control::model
 {
-    class Input
+    class ControlInput
     {
     public:
-        Input(double a, double phi)
+        ControlInput(double a, double phi)
             : a_(a),
               phi_(phi)
         {
