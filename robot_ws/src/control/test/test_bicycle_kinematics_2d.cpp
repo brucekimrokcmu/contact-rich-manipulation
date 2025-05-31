@@ -1,15 +1,15 @@
 #include <gtest/gtest.h>
-#include "control/include/model/bicycle_kinemtics.hpp"
-#include "control/include/model/control_input.hpp"
+#include "control/include/dynamics/bicycle_kinemtics.hpp"
+#include "control/include/dynamics/control_input.hpp"
 #include "control/include/state/bicycle_state_2d.hpp"
 #include "control/utils/math_utils.hpp"
 
 using namespace control::state;
-using namespace control::model;
+using namespace control::dynamics;
 
 TEST(BicycleKinematicsTest, BicycleKinematics)
 {
-	BicycleKinematics model;
+	BicycleKinematics dynamics;
 
 	// Define initial state
 	x_0 = 0.0;
@@ -29,7 +29,7 @@ TEST(BicycleKinematicsTest, BicycleKinematics)
 	double dt = 0.1;  // 0.1 seconds
 
 	// Perform state update
-	BicycleState updated_state = model.update(initial_state, input, dt);
+	BicycleState updated_state = dynamics.update(initial_state, input, dt);
 
 	// Check updated state
 	EXPECT_NEAR(updated_state.x, 0.1, 1e-5);
