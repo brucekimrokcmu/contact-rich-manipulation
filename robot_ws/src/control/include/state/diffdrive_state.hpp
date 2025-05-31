@@ -3,21 +3,19 @@
 
 namespace control::state
 {
-    class BicycleState2D : public State
+    class DiffDriveState : public State
     {
     public:
-        BicycleState2D(double x, double y, double theta, double delta, double v)
+        DiffDriveState(double x, double y, double theta)
             : x_(x),
               y_(y),
-              theta_(theta),
-              delta_(delta),
-              v_(v)
+              theta_(theta)
         {
         }
 
         Eigen::VectorXd asVector() const override
         {
-            return Eigen::VectorXd { (Eigen::VectorXd(6) << x, y, theta, delta, v).finished() }
+            return Eigen::VectorXd { (Eigen::VectorXd(3) << x_, y_, theta_).finished() }
         }
 
         void fromVector(const Eigen::VectorXd &vec) override
@@ -25,18 +23,19 @@ namespace control::state
             x_ = vec(0);
             y_ = vec(1);
             theta_ = vec(2);
-            delta_ = vec(3);
-            v_ = vec(4);
+        }
+
+        std::unique_ptr<State> clone() const override
+        {
+            return std::make_unique<DiffDriveState>(*this);
         }
 
         double x() const { return x_; }
         double y() const { return y_; }
         double theta() const { return theta_; }
-        double delta() const { return delta_; }
-        double v() const { return v_; }
 
     private:
-        double x_, y_, theta_, delta_, v_;
+        double x_, y_, theta_;
     }
 
 } // namespace control::state

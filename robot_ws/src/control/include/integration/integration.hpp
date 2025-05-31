@@ -1,12 +1,13 @@
 #pragma once
 #include <cmath>
 #include <vector>
+#include "control/include/dynamics/ModelBase.hpp"
 
-template <typename State, typename Dynamics>
-class IntegratorBase
+template <typename State, typename ControlInput>
+class IntegrationBase
 {
 public:
-    IntegratorBase(State &x, const Dynamics &f, double tf, double dt)
+    IntegrationBase(State &x, const control::dynamics::ModelBase &f, const ControlInput &u, double tf, double dt)
         : x_(x),
           x0_(x),
           f_(f),
@@ -21,17 +22,14 @@ public:
         }
     }
 
-    virtual ~IntegratorBase() = default;
+    virtual ~IntegrationBase() = default;
     virtual void integrate() = 0;
     virtual std::vector<State> integrateTrajectory() = 0;
-    // virtual const std::vector<double> &time_vec() const { return time_vec; };
-
-    State getState() const { return this->x_; }
 
 protected:
     State x_;
     State x0_;
-    const Dynamics &f_;
+    const control::dynamics::ModelBase &f_;
     double tf_;
     double dt_;
     std::size_t num_steps_;
