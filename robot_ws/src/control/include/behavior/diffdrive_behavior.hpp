@@ -1,5 +1,5 @@
 #pragma once
-#include "control/state_machine/behavior.hpp"
+#include "behavior/behavior.hpp"
 
 namespace control::behavior
 {

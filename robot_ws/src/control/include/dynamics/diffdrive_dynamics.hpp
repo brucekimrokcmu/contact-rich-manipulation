@@ -1,7 +1,7 @@
 #pragma once
-#include "control/include/dynamics/dynamics.hpp"
-#include "control/include/state/diffdrive_state.hpp"
-#include "control/control_input/diffdrive_control_input.hpp"
+#include "dynamics/dynamics.hpp"
+#include "state/diffdrive_state.hpp"
+#include "control_input/diffdrive_control_input.hpp"
 #include <memory>
 
 namespace control::dynamics

@@ -1,5 +1,5 @@
 #pragma once
-#include "control/control_input/control_input.hpp"
+#include "control_input/control_input.hpp"
 
 namespace control::behavior
 {

@@ -1,13 +1,13 @@
 #pragma once
 #include <cmath>
 #include <vector>
-#include "control/include/dynamics/ModelBase.hpp"
+#include "dynamics/dynamics.hpp"
 
 template <typename State, typename ControlInput>
 class IntegrationBase
 {
 public:
-    IntegrationBase(State &x, const control::dynamics::ModelBase &f, const ControlInput &u, double tf, double dt)
+    IntegrationBase(State &x, const control::dynamics::Dynamics &f, const ControlInput &u, double tf, double dt)
         : x_(x),
           x0_(x),
           f_(f),

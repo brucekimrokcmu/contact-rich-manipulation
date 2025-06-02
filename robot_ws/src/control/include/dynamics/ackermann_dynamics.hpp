@@ -1,7 +1,7 @@
 #pragma once
-#include "dynamics.hpp"
-#include "control/state/ackermann_state.hpp"
-#include "control/control_input/ackermann_control_input.hpp"
+#include "dynamics/dynamics.hpp"
+#include "state/ackermann_state.hpp"
+#include "control_input/ackermann_control_input.hpp"
 #include <cmath>
 #include <memory>
 

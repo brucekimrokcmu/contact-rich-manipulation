@@ -18,11 +18,9 @@ include_directories(
 )
 
 # add_executable(control_node src/control_node.cpp)  
-
 # target_include_directories(control_node PRIVATE include)
 # target_link_libraries(control_node Eigen3::Eigen)
 # ament_target_dependencies(control_node rclcpp std_msgs geometry_msgs)
-
 # install(TARGETS control_node
 #   DESTINATION lib/${PROJECT_NAME})
 
@@ -30,16 +28,20 @@ include_directories(
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   find_package(ament_cmake_gtest REQUIRED)
-  ament_lint_auto_find_test_dependencies()
+  # ament_lint_auto_find_test_dependencies()
 
-  ament_add_gtest(test_forward_euler
-    test/test_forward_euler.cpp
-  )
-  target_include_directories(test_forward_euler
-    PRIVATE
-      include ${EIGEN3_INCLUDE_DIRS})
-  target_link_libraries(test_forward_euler Eigen3::Eigen)
+  # Abstract Interface Tests
+  ament_add_gtest(test_control_input test/test_control_input.cpp)
+  target_include_directories(test_control_input PRIVATE include ${EIGEN3_INCLUDE_DIRS})
+  target_link_libraries(test_control_input Eigen3::Eigen)
 
+  ament_add_gtest(test_state test/test_state.cpp)
+  target_include_directories(test_state PRIVATE include ${EIGEN3_INCLUDE_DIRS})
+  target_link_libraries(test_state Eigen3::Eigen)
+
+  ament_add_gtest(test_dynamics test/test_dynamics.cpp)
+  target_include_directories(test_dynamics PRIVATE include ${EIGEN3_INCLUDE_DIRS})
+  target_link_libraries(test_dynamics Eigen3::Eigen)
 
   # the following line skips the linter which checks for copyrights
   # comment the line when a copyright and license is added to all source files
