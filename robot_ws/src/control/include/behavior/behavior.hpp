@@ -1,5 +1,6 @@
 #pragma once
 #include "control_input/control_input.hpp"
+#include "msgs/sensor_data.hpp"
 
 namespace control::behavior
 {
@@ -7,8 +8,9 @@ namespace control::behavior
     {
     public:
         virtual ~Behavior() = default;
-        virtual void update(double dt) = 0;
-        virtual void onCollisionDetected() = 0;
+        virtual void update(double dt, const msgs::SensorData& data) = 0;
+        virtual BehaviorMode currentMode() const = 0;
+
     };
 
 } // control::behavior

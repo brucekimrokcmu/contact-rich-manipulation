@@ -9,6 +9,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(Eigen3 REQUIRED)
 
@@ -16,6 +17,8 @@ include_directories(
   include
   ${EIGEN3_INCLUDE_DIRS}
 )
+
+
 
 # add_executable(control_node src/control_node.cpp)  
 # target_include_directories(control_node PRIVATE include)
