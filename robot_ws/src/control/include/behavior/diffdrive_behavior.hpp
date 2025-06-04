@@ -18,7 +18,7 @@ class DiffDriveBehavior : public Behavior
 public:
     DiffDriveBehavior();
     void update(double dt) override;
-    void onCollisionDeteced() override;
+    bool isCollisionDetected() override;
     BehaviorMode currentMode() const { return mode_; }
 
 private:
