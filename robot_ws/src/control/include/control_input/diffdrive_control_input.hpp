@@ -17,7 +17,7 @@ namespace control::control_input
             return (Eigen::Vector2d() << v_, omega_).finished();
         }
 
-        void fromVector(const Eigne::VectorXd &vec) override
+        void fromVector(const Eigen::VectorXd &vec) override
         {
             v_ = vec(0);
             omega_ = vec(1);
