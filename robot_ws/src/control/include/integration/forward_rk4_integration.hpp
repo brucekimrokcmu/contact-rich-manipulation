@@ -17,7 +17,7 @@ public:
         for (std::size_t i = 1; i < this->num_steps_; ++i)
         {
             double t = this->time_vec_[i - 1];
-            this->x_ = rk4Step(this->x_, t)
+            this->x_ = step(this->x_, t)
         }
     }
 
@@ -29,14 +29,14 @@ public:
         for (std::size_t i = 1; i < this->num_steps_; ++i)
         {
             double t = this->time_vec_[i - 1];
-            trajectory[i] = rk4Step(trajectory[i - 1], t);
+            trajectory[i] = step(trajectory[i - 1], t);
         }
 
         return trajectory;
     }
 
 private:
-    State rk4Step(const State &x, double t) const
+    State step(const State &x, double t) const
     {
         const double dt = this->dt_;
         const auto &f = this->f_;

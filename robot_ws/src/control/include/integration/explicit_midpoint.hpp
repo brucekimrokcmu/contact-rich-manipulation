@@ -3,11 +3,11 @@
 #include "integration_base.hpp"
 
 template <typename State, typename Dynamics>
-class ForwardEuler : public IntegrationBase<State, Dynamics>
+class ExplicitMidpoint : public IntegrationBase<State, Dynamics>
 {
 public:
     using Base = IntegratorBase<State, Dynamics>;
-    ForwardEuler(State &x, const Dynamics &f, double tf, double dt)
+    ExplicitMidpoint(State &x, const Dynamics &f, double tf, double dt)
         : Base(x, f, tf, dt)
     {
     }
@@ -40,6 +40,8 @@ private:
         const double dt = this->dt_;
         const auto &f = this->f_;
 
-        return x + dt * f(x, t);
+        x_m = x + 0.5 * dt * f(x, t)
+
+        return x + dt * f(x_m, t);
     }
 };
