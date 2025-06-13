@@ -2,18 +2,23 @@
 
 namespace control::dynamics
 {
-    using namespace control::state::AckermannState;
-    using namespace control::control_input::AckermannControlInput;
+    using control::control_input::ControlInput;
+    using control::state::State;
 
     AckermannDynamics::AckermannDynamics(double wheelbase)
         : wheelbase_(wheelbase)
     {
     }
 
-    std::unique_ptr<control::state::State> AckermannDynamics::f(const StateType &state, const control::control_input::ControlInput &input) const override
+    std::unique_ptr<State> AckermannDynamics::f(const State &state, const ControlInput &input) const override
     {
-        const auto &s = static_cast<const AckermannState&>(state);
-        const auto &u = static_cast<const AckermannControlInput&>(input);
+        if (state.type() != StateType::Ackermann || input.type() != ControlInputType::Ackermann)
+        {
+            throw std::invalid_argument("Invalid state or control input type for AckermannDynamics.");
+        }
+
+        const auto &s = static_cast<const AckermannState &>(state);
+        const auto &u = static_cast<const AckermannControlInput &>(input);
 
         double x = s.x();
         double y = s.y();

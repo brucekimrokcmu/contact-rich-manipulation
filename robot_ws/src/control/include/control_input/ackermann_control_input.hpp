@@ -3,31 +3,46 @@
 
 namespace control::control_input
 {
-    class AckermannControlInput : public ControlInput
-    {
-    public:
-        AckermannControlInput(double a, double phi)
-            : a_(a),
-              phi_(phi)
-        {
-        }
+	class AckermannControlInput : public ControlInput
+	{
+	public:
+		AckermannControlInput(double a, double phi)
+			: a_(a),
+			  phi_(phi)
+		{
+		}
 
-        Eigen::Vector2d asVector() const
-        {
-            return Eigen::Vector2d(a_, phi_).finished();
-        }
+		ControlInputType type() const override
+		{
+			return ControlInputType::Ackermann;
+		}
 
-        void fromVector(const Eigen::Vector2d &vec)
-        {
-            a_ = vec(0);
-            phi_ = vec(1);
-        }
+		std::unique_ptr<ControlInput> clone() const override
+		{
+			return std::make_unique<AckermannControlInput>(*this);
+		}
 
-        double a() const { return a_; }
-        double phi() const { return phi_; }
+		std::size_t size() const override
+		{
+			return 2; // a and phi
+		}
 
-    private:
-        double a_, phi_;
-    };
+		Eigen::Vector2d asVector() const override
+		{
+			return Eigen::Vector2d(a_, phi_).finished();
+		}
+
+		void fromVector(const Eigen::Vector2d &vec) override
+		{
+			a_ = vec(0);
+			phi_ = vec(1);
+		}
+
+		double a() const { return a_; }
+		double phi() const { return phi_; }
+
+	private:
+		double a_, phi_;
+	};
 
 } // namespace control::control_input

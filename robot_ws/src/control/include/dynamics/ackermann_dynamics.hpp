@@ -7,15 +7,17 @@
 
 namespace control::dynamics
 {
-    class AckermannDynamics : public Dynamics
-    {
-    public:
+	using control::control_input::ControlInput;
+	using control::state::State;
 
-        AckermannDynamics(double wheelbase);
-        std::unique_ptr<control::state::State> f(const StateType &state, const control::control_input::ControlInput &input) const override;
+	class AckermannDynamics : public Dynamics
+	{
+	public:
+		AckermannDynamics(double wheelbase);
+		std::unique_ptr<State> f(const State &state, const ControlInput &input) const override;
 
-    private:
-        double wheelbase_;
-    };
+	private:
+		double wheelbase_;
+	};
 
 } // namespace control::dynamics

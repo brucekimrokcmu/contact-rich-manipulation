@@ -4,11 +4,14 @@
 
 namespace control::dynamics
 {
-    class Dynamics
-    {
-    public:
-        virtual ~Dynamics() = default;
-        virtual std::unique_ptr<control::state::State> f(const control::state::State &state, const control::control_input::ControlInput &input) const = 0;
-    };
+	using control::control_input::ControlInput;
+	using control::state::State;
+
+	class Dynamics
+	{
+	public:
+		virtual ~Dynamics() = default;
+		virtual std::unique_ptr<State> f(const State &state, const ControlInput &input) const = 0;
+	};
 
 } // namespace control::dynamics

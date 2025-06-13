@@ -12,6 +12,20 @@ namespace control::control_input
         {
         }
 
+        ControlInputType type() const override
+        {
+            return ControlInputType::DiffDrive;
+        }
+        std::unique_ptr<ControlInput> clone() const override
+        {
+            return std::make_unique<DiffDriveControlInput>(*this);
+        }
+
+        std::size_t size() const override
+        {
+            return 2; // v and omega
+        }
+
         Eigen::VectorXd asVector() const override
         {
             return (Eigen::Vector2d() << v_, omega_).finished();

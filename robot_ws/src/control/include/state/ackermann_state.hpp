@@ -3,45 +3,55 @@
 
 namespace control::state
 {
-    class AckermannState : public State
-    {
-    public:
-        AckermannState(double x, double y, double theta, double delta, double v)
-            : x_(x),
-              y_(y),
-              theta_(theta),
-              delta_(delta),
-              v_(v)
-        {
-        }
+class AckermannState : public State
+{
+public:
+	AckermannState(double x, double y, double theta, double delta, double v)
+		: x_(x),
+		  y_(y),
+		  theta_(theta),
+		  delta_(delta),
+		  v_(v)
+	{
+	}
 
-        Eigen::VectorXd asVector() const override
-        {
-            return Eigen::VectorXd { (Eigen::VectorXd(6) << x, y, theta, delta, v).finished() }
-        }
+	StateType type() const override
+	{
+		return StateType::Ackermann;
+	}
 
-        void fromVector(const Eigen::VectorXd &vec) override
-        {
-            x_ = vec(0);
-            y_ = vec(1);
-            theta_ = vec(2);
-            delta_ = vec(3);
-            v_ = vec(4);
-        }
+	std::size_t size() const override
+	{
+		return 5; // x, y, theta, delta, v
+	}
 
-        std::unique_ptr<State> clone() const override
-        {
-            return std::make_unique<AckermannState>(*this);
-        }
+	Eigen::VectorXd asVector() const override
+	{
+		return Eigen::VectorXd { (Eigen::VectorXd(6) << x, y, theta, delta, v).finished() }
+	}
 
-        double x() const { return x_; }
-        double y() const { return y_; }
-        double theta() const { return theta_; }
-        double delta() const { return delta_; }
-        double v() const { return v_; }
+	void fromVector(const Eigen::VectorXd &vec) override
+	{
+		x_ = vec(0);
+		y_ = vec(1);
+		theta_ = vec(2);
+		delta_ = vec(3);
+		v_ = vec(4);
+	}
 
-    private:
-        double x_, y_, theta_, delta_, v_;
-    }
+	std::unique_ptr<State> clone() const override
+	{
+		return std::make_unique<AckermannState>(*this);
+	}
+
+	double x() const { return x_; }
+	double y() const { return y_; }
+	double theta() const { return theta_; }
+	double delta() const { return delta_; }
+	double v() const { return v_; }
+
+private:
+	double x_, y_, theta_, delta_, v_;
+}
 
 } // namespace control::state

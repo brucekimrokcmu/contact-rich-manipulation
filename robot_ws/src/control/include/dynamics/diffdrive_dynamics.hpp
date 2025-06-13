@@ -6,11 +6,14 @@
 
 namespace control::dynamics
 {
-    class DiffDriveDynamics : public Dynamics
-    {
-    public:
-        DiffDriveDynamics() = default;
-        std::unique_ptr<control::state::State> f(const StateType &state, const control::control_input::ControlInput &input) const override;
-    };
+	using control::control_input::ControlInput;
+	using control::state::State;
+
+	class DiffDriveDynamics : public Dynamics
+	{
+	public:
+		DiffDriveDynamics() = default;
+		std::unique_ptr<State> f(const State &state, const ControlInput &input) const override;
+	};
 
 } // namespace control::dynamics

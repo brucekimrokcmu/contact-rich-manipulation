@@ -2,13 +2,13 @@
 
 #include "integration_base.hpp"
 
-template <typename State, typename Dynamics>
-class ForwardEuler : public IntegrationBase<State, Dynamics>
+template <typename State, typename ControlInput>
+class ImplicitMidpoint : public IntegrationBase<State, ControlInput>
 {
 public:
-    using Base = IntegratorBase<State, Dynamics>;
-    ForwardEuler(State &x, const Dynamics &f, double tf, double dt)
-        : Base(x, f, tf, dt)
+    using Base = IntegratorBase<State, ControlInput>;
+    ImplicitMidpoint(State &x, const Dynamics &f, double tf, double dt)
+        : Base(x, f, u, tf, dt)
     {
     }
 
@@ -39,7 +39,18 @@ private:
     {
         const double dt = this->dt_;
         const auto &f = this->f_;
+        const ControlInput &u = this->u_;
 
-        return x + dt * f(x, t);
+        // Implicit midpoint method: x_{n+1} = x_n + dt * f((x_n + x_{n+1}) / 2, u)
+        State x_next = x; // Initial guess
+        for (int iter = 0; iter < 10; ++iter) // Simple fixed-point iteration
+        {
+            State mid_state = (x + x_next) / 2;
+            x_next = x + dt * f(mid_state, u);
+        }
+
+        return x_next;
     }
+
+      
 };
