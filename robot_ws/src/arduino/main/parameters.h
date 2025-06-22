@@ -4,8 +4,8 @@
 
 // Copyright RoboVac All Rights Reserved
 
-#ifndef PINS_H
-#define PINS_H
+#ifndef PARAMETERS_H
+#define PARAMETERS_H
 
 // DC motors
 const float MAX_SPEED = 2.015; // m/s
