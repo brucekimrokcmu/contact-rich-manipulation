@@ -1,11 +1,11 @@
 // Created on 22/06/2025
 
-// Constants.h
+// Pins.h
 
 // Copyright RoboVac All Rights Reserved
 
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#ifndef PINS_H
+#define PINS_H
 
 // DC motor 1
 const int MOTOR1PIN1 = 4;
@@ -20,4 +20,4 @@ const int MOTOR2EN = 9;
 // Servo motor
 int SERVOPIN = 3;
 
-#endif // CONSTANTS_H
+#endif // PINS_H
