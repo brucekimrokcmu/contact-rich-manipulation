@@ -4,6 +4,9 @@
 
 // Copyright RoboVac All Rights Reserved
 
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
 // DC motor 1
 const int MOTOR1PIN1 = 4;
 const int MOTOR1PIN2 = 5;
@@ -16,3 +19,5 @@ int MOTOR2EN = 9;
 
 // Servo motor
 int SERVOPIN = 3;
+
+#endif // CONSTANTS_H

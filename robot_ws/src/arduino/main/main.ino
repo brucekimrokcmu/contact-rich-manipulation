@@ -20,7 +20,7 @@ void setup()
     pinMode(MOTOR2PIN2, OUTPUT);
     pinMode(MOTOR2EN, OUTPUT);
 
-    myservo.attach(servoPin);
+    myservo.attach(SERVOPIN);
 }
 
 // 0 degree -> 90
