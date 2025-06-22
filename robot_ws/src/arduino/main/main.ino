@@ -50,14 +50,14 @@ void set_steering_angle(int angle)
 // Speed in m/s = (rpm * 2 * pi * radius) / 60
 // Speed in m/s = (550 * 2 * 3.14159 * 0.035) / 60
 // Speed in m/s = 2.015 m/s
-void set_speed(int speed)
+void set_speed(float speed)
 {
     // Constrain the speed to be within -2.015 to 2.015 m/s
     speed = constrain(speed, -MAX_SPEED, MAX_SPEED);
 
     // Map the speed to PWM value (0 to 255)
     // Assuming a linear mapping for simplicity, you can adjust this based on your motor's characteristics
-    int pwmValue = map(speed, 0, MAX_SPEED, 0, 255);
+    int pwmValue = map(abs(speed) * 1000, 0, MAX_SPEED * 1000, 0, 255);
 
     // Set direction based on speed sign
     if (speed >= 0)
@@ -78,8 +78,8 @@ void set_speed(int speed)
     }
 
     // Set the speed of the motors
-    analogWrite(MOTOR1EN, speed);
-    analogWrite(MOTOR2EN, speed);
+    analogWrite(MOTOR1EN, pwmValue);
+    analogWrite(MOTOR2EN, pwmValue);
 }
 
 void loop()

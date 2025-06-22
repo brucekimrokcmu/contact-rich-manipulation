@@ -10,7 +10,7 @@
 // in m/s
 // min speed is 0 m/s
 // max speed is 2.015 m/s
-int speed = 0;
+float speed = 0.0;
 
 // in degrees
 // allowed range is -30 to 30 deg
