@@ -1,6 +1,6 @@
 #include <Servo.h>
 
-Servo myservo; 
+Servo myservo;
 
 void setup()
 {
@@ -13,7 +13,7 @@ void servo_contro()
 {
     for (int pos = 0; pos < 270; pos++)
     {
-        int angle = constrain(int(pos / 1.5), 0, 180); 
+        int angle = constrain(int(pos / 1.5), 0, 180);
         myservo.write(angle);
         delay(20);
     }
@@ -28,7 +28,7 @@ void servo_contro()
 
 void loop()
 {
-    delay(500);   
-    servo_contro(); 
-    delay(1000);   
+    delay(500);
+    servo_contro();
+    delay(1000);
 }
