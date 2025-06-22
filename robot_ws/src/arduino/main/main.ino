@@ -5,8 +5,10 @@
 // Copyright RoboVac All Rights Reserved
 
 #include <Servo.h>
-#include "constants.h"
+
 #include "globals.h"
+#include "pins.h"
+#include "parameters.h"
 
 Servo myservo; // Create servo object to control the servo
 
@@ -30,7 +32,7 @@ void setup()
 void set_steering_angle(int angle)
 {
     // Constrain the angle to be within the range of -30 to 30 degrees
-    angle = constrain(angle, -30, 30);
+    angle = constrain(angle, STEERING_ANGLE_MIN, STEERING_ANGLE_MAX);
     // Map the angle to the servo's range (0 to 180 degrees)
     angle += 90; // Shift the range from [-30, 30] to [60, 120]
     // Print the angle for debugging
@@ -51,11 +53,11 @@ void set_steering_angle(int angle)
 void set_speed(int speed)
 {
     // Constrain the speed to be within -2.015 to 2.015 m/s
-    speed = constrain(speed, -2.015, 2.015);
+    speed = constrain(speed, -MAX_SPEED, MAX_SPEED);
 
     // Map the speed to PWM value (0 to 255)
     // Assuming a linear mapping for simplicity, you can adjust this based on your motor's characteristics
-    int pwmValue = map(speed, 0, 2.015, 0, 255);
+    int pwmValue = map(speed, 0, MAX_SPEED, 0, 255);
 
     // Set direction based on speed sign
     if (speed >= 0)
