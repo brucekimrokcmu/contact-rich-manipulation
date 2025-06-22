@@ -8,6 +8,11 @@
 #define PARAMETERS_H
 
 // DC motors
+// Motor rpm at 12V is 550 rpm
+// Wheel radius is 0.035 m
+// Speed in m/s = (rpm * 2 * pi * radius) / 60
+// Speed in m/s = (550 * 2 * 3.14159 * 0.035) / 60
+// Speed in m/s = 2.015 m/s
 const float MAX_SPEED = 2.015; // m/s
 
 // Servo motors

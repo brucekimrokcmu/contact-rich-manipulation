@@ -44,12 +44,6 @@ void set_steering_angle(int angle)
 
 // Motor speed is controlled by PWM, where 0 = off and 255 = max speed
 // Convert speed from m/s to PWM value
-// Assuming a linear mapping for simplicity, you can adjust this based on your motor's characteristics
-// Motor rpm at 12V is 550 rpm
-// Wheel radius is 0.035 m
-// Speed in m/s = (rpm * 2 * pi * radius) / 60
-// Speed in m/s = (550 * 2 * 3.14159 * 0.035) / 60
-// Speed in m/s = 2.015 m/s
 void set_speed(float speed)
 {
     // Constrain the speed to be within -2.015 to 2.015 m/s
