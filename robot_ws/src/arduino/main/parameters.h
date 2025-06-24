@@ -14,9 +14,15 @@
 // Speed in m/s = (550 * 2 * 3.14159 * 0.035) / 60
 // Speed in m/s = 2.015 m/s
 const float MAX_SPEED = 2.015; // m/s
+const float FORWARD_SPEED = 1.0; // m/s
+const float REVERSE_SPEED = -1.0; // m/s
 
 // Servo motors
 const int STEERING_ANGLE_MIN = -30;
 const int STEERING_ANGLE_MAX = 30;
+const int STEERING_ANGLE_CENTER = 0; 
+
+const int REVERSE_TIME = 5000; // ms
+
 
 #endif // PINS_H
