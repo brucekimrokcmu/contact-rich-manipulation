@@ -11,6 +11,8 @@ enum RobotState
     REVERSE,
     TURNCW,
     TURNCCW,
+    TURN_STEER_IN, 
+    TURN_STEER_OUT,
     SPIRAL_OUT, 
     WALL_FOLLOW, 
     EDGE_TRACE, 
@@ -36,11 +38,46 @@ unsigned long idleStartTime = 0.0;
 
 int currentSteeringAngle = STEERING_ANGLE_CENTER;
 int turnDirection = 1;          // 1 for CW, -1 for CCW
-
 bool bumpLeftDetected = false;
 bool bumpRightDetected = false;
 bool bumpAnyDetected = false; 
 bool robotStarted = false;
+unsigned long ARC_TURN_TIME = 0;
+
+/*
+ * @brief Compute time in milliseconds required to complete a turn arc.
+ * 
+ * @param wheelbase          Distance between front and rear axles (meters)
+ * @param steeringAngleDeg   Front wheel steering angle (degrees)
+ * @param turnArcAngleRad    Desired arc to sweep in radians (e.g. PI for 180°)
+ * @param speed              Vehicle speed during turn (m/s)
+ * @return unsigned long     Time in milliseconds needed to complete the turn
+ */
+unsigned long computeTurnDuration(float wheelbase,
+                                  float steeringAngleDeg,
+                                  float turnArcAngleRad,
+                                  float speed)
+{
+    // Convert steering angle to radians
+    float steeringAngleRad = steeringAngleDeg * DEG_TO_RAD;
+
+    // Prevent division by zero or invalid input
+    if (abs(tan(steeringAngleRad)) < 1e-3 || speed <= 0.0) {
+        return 0;
+    }
+
+    // Calculate turning radius from Ackermann geometry
+    float turnRadius = wheelbase / tan(steeringAngleRad); // meters
+
+    // Calculate arc length the robot must travel
+    float arcLength = turnRadius * turnArcAngleRad;       // meters
+
+    // Compute time required to traverse that arc at given speed
+    float timeSeconds = arcLength / speed;
+
+    // Return as milliseconds
+    return (unsigned long)(timeSeconds * 1000.0);
+}
 
 
 void setSteeringAngle(int angle)
@@ -87,6 +124,15 @@ void setup()
     steeringServo.attach(SERVOPIN);
     setSteeringAngle(STEERING_ANGLE_CENTER); // Center the steering servo
     setSpeed(0.0);
+
+    ARC_TURN_TIME = computeTurnDuration(
+        WHEELBASE,
+        TURN_ANGLE,         // in degrees
+        PI,                 // radians, e.g., 180° turn
+        TURN_SPEED          // m/s
+    );
+    Serial.print("Computed ARC_TURN_TIME (ms): ");
+    Serial.println(ARC_TURN_TIME);
 
     currentState = IDLE;
     cleaningMode = SYSTEMATIC_ROWS;
@@ -177,7 +223,26 @@ void executeForward()
 
     if (cleaningMode == SYSTEMATIC_ROWS)
     {
-        
+        /**
+            FORWARD (10s)
+            ↓
+            REVERSE (1.5s)
+            ↓
+            TURN_STEER_OUT (e.g., steer left, forward)
+            ↓
+            TURN_STEER_IN (e.g., steer right, forward)
+            ↓
+            FORWARD
+
+          repeat
+         */
+
+        if (millis() - lastDirectionChange > FORWARD_TIME) // 10 seconds
+        {
+            Serial.println("Forward time exceeded, reversing");
+            changeState(REVERSE);
+            return; 
+        }
     }
     else if (cleaningMode == SPIRAL_PATTERN)
     {
@@ -224,9 +289,59 @@ void exectuteReverse()
     setSteeringAngle(STEERING_ANGLE_CENTER);
     setSpeed(REVERSE_SPEED);
     
-    if (millis() - stateStartTime > REVERSE_TIME) 
+    if (cleaningMode == SYSTEMATIC_ROWS)
     {
-        // Reverse time is over, decide next action
+        if (millis() - stateStartTime > REVERSE_TIME)
+        {
+            Serial.println("Finished reversing. Turning ...");
+            changeState(TURN_STEER_OUT);
+            return;
+        }
+    }
+    else if (cleaningMode == SPIRAL_PATTERN)
+    {
+     
+    }
+    else if (cleaningMode == WALL_FOLLOWING)
+    {
+     
+    }
+    else if (cleaningMode == RANDOM_BOUNCE)
+    {
+     
+    }
+}
+
+void executeTurnSteerOut()
+{
+
+    currentSteeringAngle = STEERING_ANGLE_CENTER + TURN_ANGLE * turnDirection;
+    currentSteeringAngle = constrain(currentSteeringAngle, STEERING_ANGLE_MIN, STEERING_ANGLE_MAX);
+    setSteeringAngle(currentSteeringAngle);
+    setSpeed(TURN_SPEED);
+
+    if (millis() - stateStartTime > ARC_TURN_TIME) // 1 second
+    {
+        Serial.println("Finished steering out. Steering in ...");
+        changeState(TURN_STEER_IN);
+        return;
+    }
+}
+
+void executeTurnSteerIn()
+{
+    currentSteeringAngle = STEERING_ANGLE_CENTER - TURN_ANGLE * turnDirection;
+    currentSteeringAngle = constrain(currentSteeringAngle, STEERING_ANGLE_MIN, STEERING_ANGLE_MAX);
+    setSteeringAngle(currentSteeringAngle);
+    setSpeed(TURN_SPEED);
+
+    if (millis() - stateStartTime > ARC_TURN_TIME) // 1 second
+    {
+        Serial.println("Finished steering in. Forward ...");
+        turnDirection = -turnDirection; 
+        lastDirectionChange = millis();
+        changeState(FORWARD);
+        return;
     }
 }
 
