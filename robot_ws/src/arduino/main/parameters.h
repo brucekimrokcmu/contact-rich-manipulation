@@ -18,30 +18,21 @@
 // Speed in m/s = (550 * 2 * 3.14159 * 0.035) / 60
 // Speed in m/s = 2.015 m/s
 const float MOTOR_MAX_RPM = 550.0;         // at 12V
-const float WHEEL_RADIUS = 0.035;          // meters
+const float MOTOR_GEAR_RATIO = 19.0;
+const float WHEEL_RADIUS = 0.0325;          // meters
 const float WHEEL_CIRCUMFERENCE = 2 * PI * WHEEL_RADIUS;
-const float MAX_SPEED = (MOTOR_MAX_RPM * WHEEL_CIRCUMFERENCE) / 60.0;  // ≈ 2.015 m/s
-// const float MAX_SPEED = 2.015; // m/s
+const float MAX_SPEED = (MOTOR_MAX_RPM * WHEEL_CIRCUMFERENCE) / 60.0;  // ≈ 1.87 m/s
+
 
 // ---------------- Servo Parameters ----------------
 const int STEERING_ANGLE_MIN = -30;
 const int STEERING_ANGLE_MAX = 30;
 const int STEERING_ANGLE_CENTER = 0; 
 
-// Typical operating speeds
-const float FORWARD_SPEED = 1.0; // m/s
-const float TURN_SPEED = 0.5; // m/s
-const float REVERSE_SPEED = -1.0; // m/s
-
 // ---------------- Robot Parameters ----------------
-const float WHEELBASE = 0.25;              // TBD: measure it!
+const float WHEELBASE = 0.1651;    
+const float TRACK_WIDTH = 0.191;              // TBD: measure it!
 const int TURN_ANGLE = 15;                 
 const float TURN_ANGLE_RAD = TURN_ANGLE * DEG_TO_RAD;
-
-// ---------------- FSM Timings ----------------
-const int FORWARD_TIME = 10000; 
-const int REVERSE_TIME = 1500;
-
-
 
 #endif // PARAMETERS_H

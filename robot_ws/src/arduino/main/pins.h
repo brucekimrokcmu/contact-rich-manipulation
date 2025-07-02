@@ -20,9 +20,12 @@ const int MOTOR2EN = 9;
 // Servo motor
 const int SERVOPIN = 3;
 
-// Bump sensor left
-const int BUMPLEFTPIN = 10;
-// Bump sensor right
-const int BUMPRIGHTPIN = 11;
+// Relay
+const int RELAY = 13;
+
+// // Bump sensor left
+// const int BUMPLEFTPIN = 10;
+// // Bump sensor right
+// const int BUMPRIGHTPIN = 11;
 
 #endif // PINS_H
