@@ -1,6 +1,6 @@
 #include "state_machine.h"
-#include "robot_states.h"
-#include "sensor_control.h"
+#include "states.h"
+// #include "sensor_control.h"
 #include "motor_control.h"
 #include "parameters.h"
 
@@ -29,7 +29,7 @@ void initializeStateMachine()
 
 void updateStateMachine()
 {
-    readSensors();
+    // readSensors();
 
     switch(currentState) 
     {

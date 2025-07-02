@@ -1,4 +1,4 @@
-#include "robot_states.h"
+#include "states.h"
 #include "motor_control.h"
 #include "globals.h"
 #include "parameters.h"
@@ -181,17 +181,17 @@ void executeTurnSteerIn()
 void executeSpiralOut()
 {
     // TODO: Implement spiral out logic
-    if (spiralStartTime == 0)
-    {
-        spiralStartTime = millis();
-    }
+    // if (spiralStartTime == 0)
+    // {
+    //     spiralStartTime = millis();
+    // }
     
-    unsigned long elapsedTime = millis() - spiralStartTime;
-    float t = constrain(elapsedTime / 1000.0, 0.0, SPIRAL_DURATION / 1000.0);
+    // unsigned long elapsedTime = millis() - spiralStartTime;
+    // float t = constrain(elapsedTime / 1000.0, 0.0, SPIRAL_DURATION / 1000.0);
 
-    float currentAngle = STEERING_ANGLE_CENTER + (MIN_TURN_ANGLE + (MAX_TURN_ANGLE - MIN_TURN_ANGLE) * t) * turnDirection;
-    setSteeringAngle(currentAngle);
-    setSpeed(TURN_SPEED);
+    // float currentAngle = STEERING_ANGLE_CENTER + (MIN_TURN_ANGLE + (MAX_TURN_ANGLE - MIN_TURN_ANGLE) * t) * turnDirection;
+    // setSteeringAngle(currentAngle);
+    // setSpeed(TURN_SPEED);
 }
 
 void executeWallFollow()

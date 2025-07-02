@@ -7,6 +7,8 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
+#include "parameters.h"
+
 // // in m/s
 // // min speed is 0 m/s
 // // max speed is 2.015 m/s
