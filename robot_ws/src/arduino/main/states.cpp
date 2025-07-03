@@ -2,6 +2,7 @@
 #include "motor_control.h"
 #include "globals.h"
 #include "parameters.h"
+#include "vacuum.h"
 
 RobotState currentState = IDLE;
 CleaningPattern cleaningMode = SYSTEMATIC_ROWS;
@@ -9,10 +10,10 @@ unsigned long stateStartTime = 0;
 unsigned long totalRunTime = 0;
 unsigned long lastDirectionChange = 0;
 unsigned long idleStartTime = 0;
-int turnDirection = 1;          // 1 for CW, -1 for CCW
+int turnDirection = 1; // 1 for CW, -1 for CCW
 bool bumpLeftDetected = false;
 bool bumpRightDetected = false;
-bool bumpAnyDetected = false; 
+bool bumpAnyDetected = false;
 bool robotStarted = false;
 unsigned long ARC_TURN_TIME = 0;
 
@@ -20,11 +21,12 @@ void executeIdle()
 {
     setSteeringAngle(STEERING_ANGLE_CENTER);
     setSpeed(0.0);
-    
+
     if (millis() - stateStartTime > 5000)
     {
-        Serial.println("Auto start vacuum after 5 seconds");
+        // Serial.println("Auto start vacuum after 5 seconds");
         robotStarted = true;
+        lastDirectionChange = millis();
         changeState(FORWARD);
         return;
     }
@@ -34,7 +36,7 @@ void executeForward()
 {
     setSteeringAngle(STEERING_ANGLE_CENTER);
     setSpeed(FORWARD_SPEED);
-    
+
     if (bumpAnyDetected)
     {
         changeState(BUMP_DETECTED);
@@ -57,11 +59,12 @@ void executeForward()
           repeat
          */
 
+        startVacuum();
         if (millis() - lastDirectionChange > FORWARD_TIME) // 10 seconds
         {
             Serial.println("Forward time exceeded, reversing");
             changeState(REVERSE);
-            return; 
+            return;
         }
     }
     else if (cleaningMode == SPIRAL_PATTERN)
@@ -87,8 +90,8 @@ void executeForward()
 void executeBumpDetected()
 {
     setSpeed(0.0);
-    delay(500); 
-    
+    delay(500);
+
     if (bumpLeftDetected && bumpRightDetected)
     {
         Serial.println("Both bump sensors triggered, reversing");
@@ -111,13 +114,21 @@ void executeBumpDetected()
 void executeReverse()
 {
     setSteeringAngle(STEERING_ANGLE_CENTER);
-    setSpeed(REVERSE_SPEED);
-    
+
+    // TODO: stop vacuum
+
+    // Travel 1.2 times faster than forward
+    float forward_distance = FORWARD_SPEED * FORWARD_TIME;
+    float reverse_time = FORWARD_TIME;
+    float reverse_speed = -(forward_distance / reverse_time);
+    setSpeed(reverse_speed);
+
     if (cleaningMode == SYSTEMATIC_ROWS)
     {
-        if (millis() - stateStartTime > REVERSE_TIME)
+        stopVacuum();
+        if (millis() - stateStartTime > reverse_time)
         {
-            Serial.println("Finished reversing. Turning ...");
+            // Serial.println("Finished reversing. Turning ...");
             changeState(TURN_STEER_OUT);
             return;
         }
@@ -153,9 +164,10 @@ void executeTurnSteerOut()
     setSteeringAngle(currentSteeringAngle);
     setSpeed(TURN_SPEED);
 
+    startVacuum();
     if (millis() - stateStartTime > ARC_TURN_TIME)
     {
-        Serial.println("Finished steering out. Steering in ...");
+        // Serial.println("Finished steering out. Steering in ...");
         changeState(TURN_STEER_IN);
         return;
     }
@@ -168,10 +180,11 @@ void executeTurnSteerIn()
     setSteeringAngle(currentSteeringAngle);
     setSpeed(TURN_SPEED);
 
+    startVacuum();
     if (millis() - stateStartTime > ARC_TURN_TIME)
     {
-        Serial.println("Finished steering in. Forward ...");
-        turnDirection = -turnDirection; 
+        // Serial.println("Finished steering in. Forward ...");
+        // turnDirection = -turnDirection;
         lastDirectionChange = millis();
         changeState(FORWARD);
         return;
@@ -185,7 +198,7 @@ void executeSpiralOut()
     // {
     //     spiralStartTime = millis();
     // }
-    
+
     // unsigned long elapsedTime = millis() - spiralStartTime;
     // float t = constrain(elapsedTime / 1000.0, 0.0, SPIRAL_DURATION / 1000.0);
 
@@ -218,11 +231,11 @@ String getStateName(RobotState state)
 {
     switch (state)
     {
-    case IDLE: 
+    case IDLE:
         return "IDLE";
-    case FORWARD: 
+    case FORWARD:
         return "FORWARD";
-    case BUMP_DETECTED: 
+    case BUMP_DETECTED:
         return "BUMP_DETECTED";
     case REVERSE:
         return "REVERSE";
@@ -239,7 +252,7 @@ String getStateName(RobotState state)
     case WALL_FOLLOW:
         return "WALL_FOLLOW";
     case EDGE_TRACE:
-        return "EDGE_TRACE";    
+        return "EDGE_TRACE";
     case RANDOM_WALK:
         return "RANDOM_WALK";
     default:

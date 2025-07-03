@@ -21,7 +21,7 @@ const int MOTOR2EN = 9;
 const int SERVOPIN = 3;
 
 // Relay
-const int RELAY = 13;
+const int RELAYPIN = 13;
 
 // // Bump sensor left
 // const int BUMPLEFTPIN = 10;

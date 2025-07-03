@@ -19,17 +19,16 @@
 // int steering_angle = 0;
 
 // ---------------- FSM Timings ----------------
-const int FORWARD_TIME = 10000; 
+const int FORWARD_TIME = 5000;
 const int REVERSE_TIME = 1500;
 const unsigned long SPIRAL_DURATION = 30000; // 30 seconds
 const float MIN_TURN_ANGLE = TURN_ANGLE;
 const float MAX_TURN_ANGLE = 0.0; // straight line
 
 // Typical operating speeds
-const float FORWARD_SPEED = 1.0; // m/s
-const float TURN_SPEED = 0.5; // m/s
-const float REVERSE_SPEED = -1.0; // m/s
-
-
+const float scale = 1.5;
+const float FORWARD_SPEED = 0.4 * scale; // m/s
+const float TURN_SPEED = 0.4 * scale;    // m/s
+const float REVERSE_SPEED = -0.05;       // m/s
 
 #endif // GLOBALS_H

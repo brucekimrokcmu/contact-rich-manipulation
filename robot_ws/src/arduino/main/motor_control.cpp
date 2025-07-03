@@ -32,7 +32,7 @@ void setSpeed(float speed)
 {
     speed = constrain(speed, -MAX_SPEED, MAX_SPEED);
     int pwmValue = map(abs(speed) * 1000, 0, MAX_SPEED * 1000, 0, 255);
-    
+
     if (speed >= 0)
     {
         digitalWrite(MOTOR1PIN1, LOW);
@@ -47,8 +47,8 @@ void setSpeed(float speed)
         digitalWrite(MOTOR2PIN1, HIGH);
         digitalWrite(MOTOR2PIN2, LOW);
     }
-    
-    analogWrite(MOTOR1EN, pwmValue);
+
+    analogWrite(MOTOR1EN, constrain(pwmValue + MOTOR1PWMSPEEDOFFSET, 0, 255));
     analogWrite(MOTOR2EN, pwmValue);
 }
 
@@ -58,12 +58,13 @@ unsigned long computeTurnDuration(float wheelbase,
                                   float speed)
 {
     float steeringAngleRad = steeringAngleDeg * DEG_TO_RAD;
-    if (abs(tan(steeringAngleRad)) < 1e-3 || speed <= 0.0) {
+    if (abs(tan(steeringAngleRad)) < 1e-3 || speed <= 0.0)
+    {
         return 0;
     }
     float turnRadius = wheelbase / tan(steeringAngleRad);
-    float arcLength = turnRadius * turnArcAngleRad;      
+    float arcLength = turnRadius * turnArcAngleRad;
     float timeSeconds = arcLength / speed;
-    
+
     return (unsigned long)(timeSeconds * 1000.0);
 }
