@@ -27,11 +27,13 @@ void setup()
   Wire.begin();
 
   sensor.setTimeout(2000);
+//   sensor.setAddress(0x31);
   if (!sensor.init())
   {
     Serial.println("Failed to detect and initialize sensor!");
     while (1) {}
   }
+
 
 #if defined HIGH_SPEED
   // reduce timing budget to 20 ms (default is about 33 ms)
@@ -44,6 +46,7 @@ void setup()
 
 void loop()
 {
+  Serial.println(sensor.getAddress());
   Serial.print(sensor.readRangeSingleMillimeters());
   if (sensor.timeoutOccurred()) { Serial.print(" TIMEOUT"); }
 
