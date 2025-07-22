@@ -46,7 +46,7 @@ void setup()
 
 void loop()
 {
-  Serial.println(sensor.getAddress());
+  // Serial.println(sensor.getAddress());
   Serial.print(sensor.readRangeSingleMillimeters());
   if (sensor.timeoutOccurred()) { Serial.print(" TIMEOUT"); }
 
