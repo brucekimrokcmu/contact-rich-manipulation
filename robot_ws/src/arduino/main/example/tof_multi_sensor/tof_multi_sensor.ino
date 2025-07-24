@@ -6,12 +6,12 @@
 VL53L0X sensor1;
 VL53L0X sensor2;
 
-#define SENSOR1_ADDRESS 0x31
-#define SENSOR2_ADDRESS 0x32
+#define SENSOR1_ADDRESS 0x30
+#define SENSOR2_ADDRESS 0x31
 
 // set the pins to shutdown
-#define SHT_SENSOR1 7
-#define SHT_SENSOR2 6
+#define SHT_SENSOR1 11
+#define SHT_SENSOR2 49
 
 // Uncomment ONE of these two lines to get
 // - higher speed at the cost of lower accuracy OR
@@ -22,7 +22,6 @@ VL53L0X sensor2;
 
 void setID()
 {
-
   // Turn on sensor 1
   digitalWrite(SHT_SENSOR1, HIGH);
   digitalWrite(SHT_SENSOR2, LOW);
@@ -37,8 +36,9 @@ void setID()
   }
   sensor1.setAddress(SENSOR1_ADDRESS);
 
-  // Turn off sensor 1 and turn on sensor 2
-  digitalWrite(SHT_SENSOR1, LOW);
+  delay(10);
+
+  // Turn on sensor 2
   digitalWrite(SHT_SENSOR2, HIGH);
 
   // Init sensor 2
@@ -51,9 +51,7 @@ void setID()
   }
   sensor2.setAddress(SENSOR2_ADDRESS);
 
-  // Turn on both sensors
-  digitalWrite(SHT_SENSOR1, HIGH);
-  digitalWrite(SHT_SENSOR2, HIGH);
+  delay(10);
 }
 
 void setup()
@@ -70,8 +68,8 @@ void setup()
 
   setID();
 
-  sensor1.setTimeout(2000);
-  sensor2.setTimeout(2000);
+  sensor1.setTimeout(5000);
+  sensor2.setTimeout(5000);
 
   // increase timing budget to 200 ms
   sensor1.setMeasurementTimingBudget(200000);
@@ -80,7 +78,7 @@ void setup()
 
 void loop()
 {
-  Serial.print1(sensor1.getAddress());
+  Serial.print(sensor1.getAddress());
   Serial.print(" | ");
   Serial.print(sensor2.getAddress());
   Serial.print(" | ");
